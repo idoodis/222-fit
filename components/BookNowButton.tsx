@@ -1,0 +1,36 @@
+"use client";
+
+import { buttonVariants } from "@/components/ui/button";
+import { env } from "@/lib/env";
+import { cn } from "@/lib/utils";
+import { Calendar } from "lucide-react";
+import Link from "next/link";
+
+interface BookNowButtonProps {
+  variant?: "default" | "outline" | "secondary";
+  size?: "default" | "sm" | "lg";
+  className?: string;
+  children?: React.ReactNode;
+}
+
+export function BookNowButton({
+  variant = "default",
+  size = "default",
+  className,
+  children,
+}: BookNowButtonProps) {
+  const bookingUrl = env.NEXT_PUBLIC_VAGARO_BOOKING_URL || "#";
+
+  return (
+    <Link
+      href={bookingUrl}
+      target="_blank"
+      rel="noopener noreferrer"
+      className={cn(buttonVariants({ variant, size }), className)}
+    >
+      <Calendar className="h-4 w-4" />
+      {children || "Book Now"}
+    </Link>
+  );
+}
+
