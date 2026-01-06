@@ -33,7 +33,7 @@ export function generateLocalBusinessSchema(city: string = DEFAULT_CITY) {
         name: "Glen Ellyn",
       },
     ],
-    telephone: "(555) 123-4567", // Update with actual phone number
+    telephone: "+12244934062",
     url: siteUrl,
     priceRange: "$$",
     // Add sameAs for social media if available

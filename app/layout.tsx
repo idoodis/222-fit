@@ -27,11 +27,14 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  // fontClasses is computed from static font variables (computed at build time)
+  // No dynamic values (Date.now(), Math.random(), window-dependent logic, etc.)
   const fontClasses = `${inter.variable} ${poppins.variable}`;
   const gaId = env.NEXT_PUBLIC_GA_MEASUREMENT_ID;
 
   return (
-    <html lang="en" className={fontClasses}>
+    // Suppress hydration warning for browser extension-injected attributes (e.g., --vsc-domain)
+    <html lang="en" className={fontClasses} suppressHydrationWarning>
       <body className="min-h-screen flex flex-col">
         {gaId && (
           <>

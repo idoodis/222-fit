@@ -1,7 +1,7 @@
 "use client";
 
 import { buttonVariants } from "@/components/ui/button";
-import { env } from "@/lib/env";
+import { BOOKING_MEMBERSHIPS_URL } from "@/lib/constants";
 import { cn } from "@/lib/utils";
 import { Calendar } from "lucide-react";
 import Link from "next/link";
@@ -19,11 +19,9 @@ export function BookNowButton({
   className,
   children,
 }: BookNowButtonProps) {
-  const bookingUrl = env.NEXT_PUBLIC_VAGARO_BOOKING_URL || "#";
-
   return (
     <Link
-      href={bookingUrl}
+      href={BOOKING_MEMBERSHIPS_URL}
       target="_blank"
       rel="noopener noreferrer"
       className={cn(buttonVariants({ variant, size }), className)}

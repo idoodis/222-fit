@@ -46,8 +46,8 @@ NEXT_PUBLIC_VAGARO_BOOKING_URL=https://your-vagaro-url.com
 NEXT_PUBLIC_GA_MEASUREMENT_ID=G-XXXXXXXXXX
 NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION=your-verification-code
 RESEND_API_KEY=re_xxxxxxxxxxxxx
-RESEND_FROM_EMAIL=noreply@yourdomain.com
-RESEND_TO_EMAIL=contact@yourdomain.com
+RESEND_FROM_EMAIL=noreply@222fit.com
+RESEND_TO_EMAIL=bri@222fit.com
 ```
 
 5. Run the development server:

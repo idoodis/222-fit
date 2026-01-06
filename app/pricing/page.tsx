@@ -4,6 +4,7 @@ import { DEFAULT_CITY } from "@/lib/constants";
 import { generateMetadata } from "@/lib/seo";
 import { generateBreadcrumbSchema } from "@/lib/schema";
 import { CheckCircle, Crown } from "lucide-react";
+import Link from "next/link";
 
 export const metadata = generateMetadata({
   title: "Pricing & Packages",
@@ -140,8 +141,23 @@ export default function PricingPage() {
                   </li>
                 ))}
               </ul>
-              <div className="mt-8">
-                <BookNowButton className="w-full" />
+              <div className="mt-8 space-y-3">
+                <Link
+                  href="/start"
+                  className="w-full inline-flex items-center justify-center rounded-md bg-primary px-6 py-3 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
+                >
+                  Get Started
+                </Link>
+                <p className="text-center">
+                  <a
+                    href="https://www.vagaro.com/222fit/memberships"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-xs text-muted-foreground hover:text-primary transition-colors"
+                  >
+                    Prefer to book immediately? Book on Vagaro →
+                  </a>
+                </p>
               </div>
             </div>
           ))}

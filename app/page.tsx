@@ -121,10 +121,10 @@ export default function HomePage() {
             </p>
             <div className="mt-10 flex flex-col gap-4 sm:flex-row sm:justify-center relative z-10">
               <Link
-                href="/contact"
+                href="/start"
                 className="inline-flex items-center justify-center rounded-md bg-primary px-8 py-3 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
               >
-                Book Now
+                Start Here
               </Link>
               <Link
                 href="/services"
@@ -167,7 +167,7 @@ export default function HomePage() {
                 <div className="space-y-4 text-muted-foreground">
                   <p>
                     With over 8 years of experience in personal training and group fitness, 
-                    [Trainer Name] is passionate about helping people build a sustainable, 
+                    Briana Orozco is passionate about helping people build a sustainable, 
                     confident relationship with exercise. Her coaching philosophy is rooted in 
                     a balanced approach to fitness—one that values consistency, structure, 
                     self-care, and a healthy relationship with food, while still allowing room 

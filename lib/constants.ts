@@ -9,6 +9,8 @@ export const ADDRESS = {
   full: "503 Thornhill Dr, Carol Stream, IL 60188",
 };
 
+export const BOOKING_MEMBERSHIPS_URL = "https://www.vagaro.com/222fit/memberships";
+
 export const SERVICES = [
   {
     slug: "personal-training",

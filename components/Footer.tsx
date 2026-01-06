@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
-import { SITE_NAME, DEFAULT_CITY, ADDRESS } from "@/lib/constants";
+import { SITE_NAME, DEFAULT_CITY, ADDRESS, BOOKING_MEMBERSHIPS_URL } from "@/lib/constants";
 import { Phone, MapPin } from "lucide-react";
 
 export function Footer() {
@@ -60,10 +60,10 @@ export function Footer() {
               <div className="flex items-start gap-2">
                 <Phone className="mt-0.5 h-4 w-4 text-primary flex-shrink-0" />
                 <a 
-                  href="tel:+1234567890" 
+                  href="tel:+12244934062" 
                   className="text-xs text-muted-foreground hover:text-primary transition-colors"
                 >
-                  (555) 123-4567
+                  (224) 493-4062
                 </a>
               </div>
               <p className="text-xs text-muted-foreground pt-1">

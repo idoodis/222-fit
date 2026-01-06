@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
@@ -8,20 +8,30 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
-import { Select } from "@/components/ui/select";
-import { SERVICES } from "@/lib/constants";
 
 const leadFormSchema = z.object({
   name: z.string().min(2, "Name must be at least 2 characters"),
   email: z.string().email("Invalid email address"),
-  phone: z.string().min(10, "Please enter a valid phone number"),
-  goal: z.string().min(1, "Please select a goal"),
-  preferredService: z.string().min(1, "Please select a service"),
-  message: z.string().optional(),
-  honeypot: z.string().max(0, "Bot detected"),
+  phone: z.string().optional(),
+  message: z.string().min(1, "Message is required"),
+  hp: z.string().optional(), // Honeypot field
 });
 
 type LeadFormData = z.infer<typeof leadFormSchema>;
+
+// Analytics helper
+function trackContactFormSubmit() {
+  if (typeof window !== "undefined" && (window as any).gtag) {
+    try {
+      (window as any).gtag("event", "contact_form_submit", {
+        page_path: window.location.pathname,
+        source: "contact",
+      });
+    } catch (error) {
+      // Fail silently if analytics not available
+    }
+  }
+}
 
 export function LeadForm() {
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -38,7 +48,8 @@ export function LeadForm() {
   } = useForm<LeadFormData>({
     resolver: zodResolver(leadFormSchema),
     defaultValues: {
-      honeypot: "",
+      hp: "",
+      phone: "",
     },
   });
 
@@ -52,22 +63,44 @@ export function LeadForm() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(data),
+        body: JSON.stringify({
+          name: data.name,
+          email: data.email,
+          phone: data.phone || undefined,
+          message: data.message,
+          hp: data.hp || undefined,
+        }),
       });
+
+      const result = await response.json();
 
       if (!response.ok) {
-        throw new Error("Failed to send message");
+        // Handle rate limiting
+        if (response.status === 429) {
+          setSubmitStatus({
+            type: "error",
+            message: result.error || "Too many requests. Please try again in a few minutes.",
+          });
+          return;
+        }
+        throw new Error(result.error || "Failed to send message");
       }
 
+      // Success
       setSubmitStatus({
         type: "success",
-        message: "Thank you! We'll be in touch soon.",
+        message: "Thank you! We've received your message and will be in touch soon.",
       });
+      
+      // Track analytics event
+      trackContactFormSubmit();
+      
+      // Clear form on success
       reset();
     } catch (error) {
       setSubmitStatus({
         type: "error",
-        message: "Something went wrong. Please try again or call us directly.",
+        message: "Something went wrong. Please try again or call us directly at (224) 493-4062.",
       });
     } finally {
       setIsSubmitting(false);
@@ -76,13 +109,20 @@ export function LeadForm() {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
-      {/* Honeypot field */}
+      {/* Honeypot field - visually hidden but not type="hidden" */}
       <input
         type="text"
-        {...register("honeypot")}
-        className="hidden"
+        {...register("hp")}
+        className="absolute opacity-0 pointer-events-none"
+        style={{
+          position: "absolute",
+          left: "-9999px",
+          width: "1px",
+          height: "1px",
+        }}
         tabIndex={-1}
         autoComplete="off"
+        aria-hidden="true"
       />
 
       <div className="grid gap-6 md:grid-cols-2">
@@ -95,6 +135,7 @@ export function LeadForm() {
             {...register("name")}
             placeholder="Your name"
             className="mt-1"
+            disabled={isSubmitting}
           />
           {errors.name && (
             <p className="mt-1 text-sm text-destructive">{errors.name.message}</p>
@@ -111,6 +152,7 @@ export function LeadForm() {
             {...register("email")}
             placeholder="your@email.com"
             className="mt-1"
+            disabled={isSubmitting}
           />
           {errors.email && (
             <p className="mt-1 text-sm text-destructive">{errors.email.message}</p>
@@ -119,15 +161,14 @@ export function LeadForm() {
       </div>
 
       <div>
-        <Label htmlFor="phone">
-          Phone <span className="text-destructive">*</span>
-        </Label>
+        <Label htmlFor="phone">Phone (Optional)</Label>
         <Input
           id="phone"
           type="tel"
           {...register("phone")}
-          placeholder="(555) 123-4567"
+          placeholder="(224) 493-4062"
           className="mt-1"
+          disabled={isSubmitting}
         />
         {errors.phone && (
           <p className="mt-1 text-sm text-destructive">{errors.phone.message}</p>
@@ -135,64 +176,28 @@ export function LeadForm() {
       </div>
 
       <div>
-        <Label htmlFor="goal">
-          What's your primary goal? <span className="text-destructive">*</span>
+        <Label htmlFor="message">
+          Message <span className="text-destructive">*</span>
         </Label>
-        <Select id="goal" {...register("goal")} className="mt-1">
-          <option value="">Select a goal</option>
-          <option value="weight-loss">Weight Loss</option>
-          <option value="muscle-gain">Muscle Gain</option>
-          <option value="strength">Strength Building</option>
-          <option value="endurance">Endurance</option>
-          <option value="flexibility">Flexibility</option>
-          <option value="general-fitness">General Fitness</option>
-          <option value="sport-specific">Sport-Specific Training</option>
-        </Select>
-        {errors.goal && (
-          <p className="mt-1 text-sm text-destructive">{errors.goal.message}</p>
-        )}
-      </div>
-
-      <div>
-        <Label htmlFor="preferredService">
-          Preferred Service <span className="text-destructive">*</span>
-        </Label>
-        <Select
-          id="preferredService"
-          {...register("preferredService")}
-          className="mt-1"
-        >
-          <option value="">Select a service</option>
-          {SERVICES.map((service) => (
-            <option key={service.slug} value={service.slug}>
-              {service.title}
-            </option>
-          ))}
-        </Select>
-        {errors.preferredService && (
-          <p className="mt-1 text-sm text-destructive">
-            {errors.preferredService.message}
-          </p>
-        )}
-      </div>
-
-      <div>
-        <Label htmlFor="message">Message (Optional)</Label>
         <Textarea
           id="message"
           {...register("message")}
           placeholder="Tell us about yourself and your fitness goals..."
-          rows={4}
+          rows={5}
           className="mt-1"
+          disabled={isSubmitting}
         />
+        {errors.message && (
+          <p className="mt-1 text-sm text-destructive">{errors.message.message}</p>
+        )}
       </div>
 
       {submitStatus && (
         <div
           className={`rounded-md p-4 ${
             submitStatus.type === "success"
-              ? "bg-green-50 text-green-800"
-              : "bg-red-50 text-red-800"
+              ? "bg-green-50 text-green-800 border border-green-200"
+              : "bg-red-50 text-red-800 border border-red-200"
           }`}
         >
           {submitStatus.message}

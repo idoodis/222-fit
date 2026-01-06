@@ -9,7 +9,6 @@ interface Testimonial {
   name: string;
   content: string;
   rating: number;
-  image?: string;
   role?: string;
 }
 
@@ -77,7 +76,6 @@ export function TestimonialCarousel({
                 name={testimonial.name}
                 content={testimonial.content}
                 rating={testimonial.rating}
-                image={testimonial.image}
                 role={testimonial.role}
               />
             </div>
