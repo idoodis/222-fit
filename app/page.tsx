@@ -95,7 +95,7 @@ export default function HomePage() {
         <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
           <div className="relative w-full h-full max-w-4xl max-h-4xl">
             <Image
-              src="/logo.png"
+              src="/images/logo.png"
               alt=""
               fill
               className="object-contain opacity-[0.085] brightness-110 contrast-90 blur-[2px]"

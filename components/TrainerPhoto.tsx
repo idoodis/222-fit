@@ -17,7 +17,7 @@ export function TrainerPhoto() {
   return (
     <div className="relative aspect-square overflow-hidden rounded-lg">
       <Image
-        src="/bri.jpeg"
+        src="/images/trainer.jpg"
         alt="Personal trainer at 222 Fit in Carol Stream, IL"
         fill
         className="object-cover"

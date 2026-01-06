@@ -35,7 +35,7 @@ export function Footer() {
           <div className="space-y-4">
             <Link href="/" className="inline-block">
               <Image
-                src="/logo.png"
+                src="/images/logo.png"
                 alt={`${SITE_NAME} Logo`}
                 width={350}
                 height={105}

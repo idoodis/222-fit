@@ -27,7 +27,7 @@ export function Navbar() {
         <div className="flex h-16 items-center justify-between">
           <Link href="/" className="flex items-center space-x-2">
               <Image
-                src="/logo.png"
+                src="/images/logo.png"
                 alt="222 Fit logo"
                 width={400}
                 height={120}

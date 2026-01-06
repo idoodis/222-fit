@@ -9,8 +9,8 @@ export function generateLocalBusinessSchema(city: string = DEFAULT_CITY) {
     "@type": "LocalBusiness",
     name: SITE_NAME,
     description: `Premium personal training in ${city}, IL. One-on-one training, small group classes, and online coaching.`,
-    image: siteUrl ? `${siteUrl}/logo.png` : undefined,
-    logo: siteUrl ? `${siteUrl}/logo.png` : undefined,
+    image: siteUrl ? `${siteUrl}/images/logo.png` : undefined,
+    logo: siteUrl ? `${siteUrl}/images/logo.png` : undefined,
     address: {
       "@type": "PostalAddress",
       streetAddress: ADDRESS.street,
