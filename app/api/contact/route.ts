@@ -1,8 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { Resend } from "resend";
-import { env } from "@/lib/env";
 import { z } from "zod";
-import { checkRateLimit } from "@/lib/rate-limit";
 
 const contactSchema = z.object({
   name: z.string().min(2, "Name must be at least 2 characters"),
@@ -22,11 +20,13 @@ function getFirstName(fullName: string): string {
 }
 
 export async function POST(request: NextRequest) {
+  console.log("CONTACT API HIT");
+  
   try {
     const body = await request.json();
 
-    // Honeypot check - if hp has any value, return success immediately
-    if (body.hp && body.hp.trim().length > 0) {
+    // Honeypot check - only early-return when hp contains a non-empty string
+    if (typeof body.hp === "string" && body.hp.trim().length > 0) {
       // Silently return success for bots - don't log or send emails
       return NextResponse.json({ success: true }, { status: 200 });
     }
@@ -34,25 +34,12 @@ export async function POST(request: NextRequest) {
     // Validate the request
     const validatedData = contactSchema.parse(body);
 
-    // Get client IP for rate limiting
-    const ip =
-      request.headers.get("x-forwarded-for")?.split(",")[0] ||
-      request.headers.get("x-real-ip") ||
-      "unknown";
-
-    // Rate limiting: 5 submissions per 10 minutes per IP
-    const rateLimitResult = await checkRateLimit(`contact:${ip}`, 5, 10 * 60 * 1000);
-
-    if (!rateLimitResult.success) {
-      console.log(`Rate limit exceeded for IP: ${ip}`);
-      return NextResponse.json(
-        { error: "Too many requests. Please try again later." },
-        { status: 429 }
-      );
-    }
-
     // Check if Resend is configured
-    if (!env.RESEND_API_KEY) {
+    console.log("Has RESEND_API_KEY:", !!process.env.RESEND_API_KEY);
+    console.log("RESEND_FROM_EMAIL:", process.env.RESEND_FROM_EMAIL);
+    console.log("RESEND_TO_EMAIL:", process.env.RESEND_TO_EMAIL);
+
+    if (!process.env.RESEND_API_KEY) {
       console.error("RESEND_API_KEY not configured");
       return NextResponse.json(
         { error: "Email service not configured" },
@@ -60,7 +47,15 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const resend = new Resend(env.RESEND_API_KEY);
+    if (!process.env.RESEND_FROM_EMAIL || !process.env.RESEND_TO_EMAIL) {
+      console.error("RESEND_FROM_EMAIL or RESEND_TO_EMAIL not configured");
+      return NextResponse.json(
+        { error: "Email configuration incomplete" },
+        { status: 500 }
+      );
+    }
+
+    const resend = new Resend(process.env.RESEND_API_KEY);
     const firstName = getFirstName(validatedData.name);
     const timestamp = new Date().toLocaleString("en-US", {
       timeZone: "America/Chicago",
@@ -68,11 +63,12 @@ export async function POST(request: NextRequest) {
       timeStyle: "short",
     });
 
-    // Send internal notification email to bri@222fit.com
+    // Send internal notification email
+    console.log("Sending internal email");
     try {
-      await resend.emails.send({
-        from: "222 Fit <hello@send.222fit.com>",
-        to: "bri@222fit.com",
+      const internalResult = await resend.emails.send({
+        from: `222 Fit <${process.env.RESEND_FROM_EMAIL}>`,
+        to: process.env.RESEND_TO_EMAIL!,
         replyTo: validatedData.email,
         subject: "New Contact Form Submission",
         html: `
@@ -84,18 +80,21 @@ export async function POST(request: NextRequest) {
           <p>${validatedData.message.replace(/\n/g, "<br>")}</p>
           <hr>
           <p><small><strong>Submitted:</strong> ${timestamp}</small></p>
-          <p><small><strong>IP Address:</strong> ${ip}</small></p>
         `,
       });
-    } catch (emailError) {
-      console.error("Failed to send internal notification email:", emailError);
-      // Continue to send auto-reply even if internal email fails
+      console.log("✅ Internal email sent successfully:", JSON.stringify(internalResult, null, 2));
+    } catch (emailError: any) {
+      console.error("❌ Failed to send internal notification email:");
+      console.error("Error:", emailError?.message || emailError);
+      console.error("Full error:", JSON.stringify(emailError, Object.getOwnPropertyNames(emailError), 2));
+      // Continue to try auto-reply even if internal email fails
     }
 
     // Send auto-reply confirmation email to submitter
+    console.log("Sending auto-reply");
     try {
-      await resend.emails.send({
-        from: "222 Fit <hello@send.222fit.com>",
+      const autoReplyResult = await resend.emails.send({
+        from: `222 Fit <${process.env.RESEND_FROM_EMAIL}>`,
         to: validatedData.email,
         subject: "We received your message 💪 — 222 Fit",
         html: `
@@ -117,9 +116,11 @@ export async function POST(request: NextRequest) {
           <p><em>Transform your body. Transform your life.</em></p>
         `,
       });
-    } catch (emailError) {
-      console.error("Failed to send auto-reply email:", emailError);
-      // Still return success if auto-reply fails (internal email was sent)
+      console.log("✅ Auto-reply email sent successfully:", JSON.stringify(autoReplyResult, null, 2));
+    } catch (emailError: any) {
+      console.error("❌ Failed to send auto-reply email:");
+      console.error("Error:", emailError?.message || emailError);
+      console.error("Full error:", JSON.stringify(emailError, Object.getOwnPropertyNames(emailError), 2));
     }
 
     return NextResponse.json(
