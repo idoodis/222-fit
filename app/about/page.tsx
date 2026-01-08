@@ -2,10 +2,12 @@ import { SectionHeader } from "@/components/SectionHeader";
 import { DEFAULT_CITY, ADDRESS } from "@/lib/constants";
 import { generateMetadata } from "@/lib/seo";
 import { generateBreadcrumbSchema } from "@/lib/schema";
+import Link from "next/link";
+import { ArrowRight } from "lucide-react";
 
 export const metadata = generateMetadata({
-  title: "About Us",
-  description: `Learn about 222 Fit and our mission to help you achieve your fitness goals in ${DEFAULT_CITY}.`,
+  title: "About Us | Personal Training in Carol Stream, IL",
+  description: `Learn about 222 Fit and our mission to help you achieve your fitness goals in Carol Stream, IL. Meet Briana Orozco, certified personal trainer with 8+ years of experience. Serving Carol Stream, Wheaton, Glen Ellyn, and surrounding areas.`,
   path: "/about",
 });
 
@@ -64,12 +66,27 @@ export default function AboutPage() {
           <div>
             <h2 className="mb-4 text-2xl font-semibold">Location & Service Area</h2>
             <p className="mb-4 text-muted-foreground">
-              We're located at <strong>{ADDRESS.full}</strong> in {DEFAULT_CITY}. We proudly serve {DEFAULT_CITY} and the surrounding areas. Our
+              We're located at <strong>{ADDRESS.full}</strong> in {DEFAULT_CITY}. We proudly serve {DEFAULT_CITY}, Wheaton, Glen Ellyn, and the surrounding areas. Our
               trainers are available for in-person sessions at our facility or
               at your preferred location. We also offer online training for
               clients who prefer to work out from home or while traveling.
             </p>
           </div>
+        </div>
+
+        {/* CTA Section */}
+        <div className="mt-12 text-center">
+          <h2 className="text-2xl font-semibold mb-4">Ready to Get Started?</h2>
+          <p className="text-muted-foreground mb-8 max-w-2xl mx-auto">
+            Book a free consultation to discuss your fitness goals and learn how we can help you achieve them.
+          </p>
+          <Link
+            href="/contact"
+            className="inline-flex items-center justify-center rounded-md bg-primary px-8 py-3 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
+          >
+            Book a Free Consultation
+            <ArrowRight className="ml-2 h-4 w-4" />
+          </Link>
         </div>
       </div>
     </>

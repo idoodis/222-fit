@@ -7,8 +7,8 @@ import { CheckCircle, Crown } from "lucide-react";
 import Link from "next/link";
 
 export const metadata = generateMetadata({
-  title: "Pricing & Packages",
-  description: `Affordable fitness training packages in ${DEFAULT_CITY}. Flexible pricing options for personal training, group classes, and online coaching.`,
+  title: "Pricing & Packages | Personal Training in Carol Stream, IL",
+  description: `Affordable fitness training packages in Carol Stream, IL. Flexible pricing options for personal training, group classes, mat Pilates, boxing lessons, and online coaching. Serving Carol Stream, Wheaton, Glen Ellyn, and surrounding areas.`,
   path: "/pricing",
 });
 

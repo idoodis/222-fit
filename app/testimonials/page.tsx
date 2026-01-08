@@ -7,8 +7,8 @@ import { generateBreadcrumbSchema } from "@/lib/schema";
 import { facebookReviews } from "@/lib/facebook-reviews";
 
 export const metadata = generateMetadata({
-  title: "Client Results & Testimonials",
-  description: `See real results from our clients in ${DEFAULT_CITY}. Read testimonials and success stories from 222 Fit members.`,
+  title: "Client Results & Testimonials | 222 Fit Carol Stream, IL",
+  description: `See real results from our clients in Carol Stream, IL. Read testimonials and success stories from 222 Fit members. View transformation photos and Facebook reviews from clients in Carol Stream, Wheaton, Glen Ellyn, and surrounding areas.`,
   path: "/testimonials",
 });
 

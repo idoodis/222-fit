@@ -89,7 +89,7 @@ export function LeadForm() {
       // Success
       setSubmitStatus({
         type: "success",
-        message: "Thank you! We've received your message and will be in touch soon.",
+        message: "Thank you! We've received your message. Bri will reach out shortly to discuss your fitness goals and next steps.",
       });
       
       // Track analytics event

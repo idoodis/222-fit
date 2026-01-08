@@ -6,8 +6,8 @@ import { generateBreadcrumbSchema } from "@/lib/schema";
 import { Mail, Phone, MapPin } from "lucide-react";
 
 export const metadata = generateMetadata({
-  title: "Contact Us",
-  description: `Get in touch with 222 Fit in ${DEFAULT_CITY}. Book a session, ask questions, or learn more about our services.`,
+  title: "Contact Us | Book a Free Consultation in Carol Stream, IL",
+  description: `Get in touch with 222 Fit in Carol Stream, IL. Book a free consultation, ask questions, or learn more about our personal training services. Serving Carol Stream, Wheaton, Glen Ellyn, and surrounding areas.`,
   path: "/contact",
 });
 

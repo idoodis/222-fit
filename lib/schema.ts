@@ -36,10 +36,12 @@ export function generateLocalBusinessSchema(city: string = DEFAULT_CITY) {
     telephone: "+12244934062",
     url: siteUrl,
     priceRange: "$$",
-    // Add sameAs for social media if available
+    // Placeholders for future social media and GBP links
+    // Uncomment and update when available:
     // sameAs: [
-    //   "https://www.facebook.com/222fit",
-    //   "https://www.instagram.com/222fit",
+    //   "https://www.google.com/maps?cid=YOUR_GBP_CID", // Google Business Profile
+    //   "https://www.facebook.com/100082665914539", // Facebook
+    //   "https://www.instagram.com/222fit", // Instagram (if available)
     // ],
   };
 }

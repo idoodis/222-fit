@@ -6,8 +6,10 @@ import { LeadForm } from "@/components/LeadForm";
 import { ResultsGallery } from "@/components/ResultsGallery";
 import { TrainerPhoto } from "@/components/TrainerPhoto";
 import { TrustBar } from "@/components/TrustBar";
+import { TestimonialCarousel } from "@/components/TestimonialCarousel";
 import { SERVICES, DEFAULT_CITY } from "@/lib/constants";
 import { generateLocalBusinessSchema } from "@/lib/schema";
+import { facebookReviews } from "@/lib/facebook-reviews";
 import {
   Dumbbell,
   Users,
@@ -98,7 +100,7 @@ export default function HomePage() {
               src="/images/logo.png"
               alt=""
               fill
-              className="object-contain opacity-[0.085] brightness-110 contrast-90 blur-[2px]"
+              className="object-contain opacity-[0.185] brightness-110 contrast-90 blur-[2px]"
               style={{
                 filter: 'brightness(1.1) contrast(0.9) blur(2px)',
               }}
@@ -117,14 +119,14 @@ export default function HomePage() {
               Transform Your Body, Transform Your Life
             </h1>
             <p className="mt-6 text-lg text-muted-foreground sm:text-xl relative z-10">
-              Premium personal training in Carol Stream, IL. One-on-one training, small group classes, and online coaching designed for sustainable results.
+              Premium personal training in Carol Stream, IL. One-on-one training, small group classes, and online coaching designed for sustainable results. Serving Carol Stream, Wheaton, Glen Ellyn, and surrounding areas.
             </p>
             <div className="mt-10 flex flex-col gap-4 sm:flex-row sm:justify-center relative z-10">
               <Link
-                href="/start"
+                href="/contact"
                 className="inline-flex items-center justify-center rounded-md bg-primary px-8 py-3 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
               >
-                Start Here
+                Book a Free Consultation
               </Link>
               <Link
                 href="/services"
@@ -158,8 +160,8 @@ export default function HomePage() {
                     <p className="text-muted-foreground">
                       Bachelor's Degree in Exercise Science
                     </p>
-                    <p className="text-sm text-muted-foreground mt-3 italic">
-                      Serving Carol Stream, Wheaton, Glen Ellyn, and surrounding areas.
+                    <p className="text-sm text-muted-foreground mt-3">
+                      Serving Carol Stream, Wheaton, Glen Ellyn, and nearby communities.
                     </p>
                   </div>
                 </div>
@@ -203,7 +205,7 @@ export default function HomePage() {
                     href="/contact"
                     className="inline-flex items-center justify-center rounded-md border border-primary/30 bg-transparent px-6 py-3 text-sm font-medium text-primary transition-all hover:bg-primary/10 hover:border-primary"
                   >
-                    Train With Me
+                    Book a Free Consultation
                   </Link>
                 </div>
               </div>
@@ -263,10 +265,21 @@ export default function HomePage() {
       <section className="py-16 md:py-24">
         <div className="container mx-auto px-4">
           <SectionHeader
-            title="Success Stories"
-            subtitle="Testimonials"
-            description="See what our clients have achieved"
+            title="What Clients Are Saying"
+            subtitle="Client Reviews"
+            description="Real feedback from clients in Carol Stream, Wheaton, Glen Ellyn, and surrounding areas"
           />
+          {/* Facebook Reviews Carousel */}
+          {facebookReviews.length > 0 && (
+            <div className="mt-12 mx-auto max-w-4xl">
+              <TestimonialCarousel
+                testimonials={facebookReviews}
+                autoRotate={true}
+                rotateInterval={5000}
+              />
+            </div>
+          )}
+          {/* Additional Testimonials Grid */}
           <div className="mt-12 grid gap-6 md:grid-cols-3">
             {testimonials.map((testimonial, index) => (
               <TestimonialCard key={index} {...testimonial} />

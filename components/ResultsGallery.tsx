@@ -14,7 +14,7 @@ export function ResultsGallery({ images }: ResultsGalleryProps) {
         <ResultImage
           key={i}
           src={imagePath}
-          alt={`Client transformation result ${i + 1}`}
+          alt={`Client transformation result from 222 Fit personal training in Carol Stream, IL - Before and after ${i + 1}`}
           index={i}
         />
       ))}

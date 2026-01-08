@@ -1,5 +1,6 @@
-import { BookNowButton } from "@/components/BookNowButton";
 import { SectionHeader } from "@/components/SectionHeader";
+import Link from "next/link";
+import { ArrowRight } from "lucide-react";
 
 interface BookingSectionProps {
   title?: string;
@@ -30,7 +31,13 @@ export function BookingSection({
             />
           ) : (
             <div className="mt-8">
-              <BookNowButton size="lg" />
+              <Link
+                href="/contact"
+                className="inline-flex items-center justify-center rounded-md bg-primary px-8 py-3 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
+              >
+                Book a Free Consultation
+                <ArrowRight className="ml-2 h-4 w-4" />
+              </Link>
             </div>
           )}
         </div>
