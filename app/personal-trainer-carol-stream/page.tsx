@@ -3,10 +3,13 @@ import { ServiceCard } from "@/components/ServiceCard";
 import { TestimonialCarousel } from "@/components/TestimonialCarousel";
 import { TrustBar } from "@/components/TrustBar";
 import { GoogleReviewsBadge } from "@/components/GoogleReviewsBadge";
-import { SERVICES, ADDRESS, DEFAULT_CITY } from "@/lib/constants";
+import { FeaturedReviews } from "@/components/FeaturedReviews";
+import { SERVICES, ADDRESS, DEFAULT_CITY, SITE_NAME } from "@/lib/constants";
 import { generateMetadata } from "@/lib/seo";
 import { generateBreadcrumbSchema, generateFAQSchema } from "@/lib/schema";
 import { facebookReviews } from "@/lib/facebook-reviews";
+import { featuredReviews } from "@/lib/featuredReviews";
+import { env } from "@/lib/env";
 import {
   Dumbbell,
   Users,
@@ -76,6 +79,37 @@ export default function PersonalTrainerCarolStreamPage() {
   ]);
 
   const faqSchema = generateFAQSchema(faqs);
+  const featuredReviewSchema =
+    featuredReviews.length > 0
+      ? {
+          "@context": "https://schema.org",
+          "@type": "LocalBusiness",
+          name: SITE_NAME,
+          url: env.NEXT_PUBLIC_SITE_URL,
+          address: {
+            "@type": "PostalAddress",
+            streetAddress: ADDRESS.street,
+            addressLocality: ADDRESS.city,
+            addressRegion: ADDRESS.state,
+            postalCode: ADDRESS.zip,
+            addressCountry: "US",
+          },
+          review: featuredReviews.map((review) => ({
+            "@type": "Review",
+            author: {
+              "@type": "Person",
+              name: review.author,
+            },
+            datePublished: review.date,
+            reviewBody: review.text,
+            reviewRating: {
+              "@type": "Rating",
+              ratingValue: review.rating,
+              bestRating: "5",
+            },
+          })),
+        }
+      : null;
 
   return (
     <>
@@ -87,6 +121,12 @@ export default function PersonalTrainerCarolStreamPage() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
       />
+      {featuredReviewSchema && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(featuredReviewSchema) }}
+        />
+      )}
 
       {/* Hero Section */}
       <section className="relative overflow-hidden bg-gradient-to-br from-primary/5 via-background to-primary/3 py-20 md:py-32">
@@ -211,6 +251,15 @@ export default function PersonalTrainerCarolStreamPage() {
               />
             </div>
           )}
+          <div className="mt-12">
+            <div className="mb-6 text-center">
+              <h3 className="text-2xl font-semibold">Featured Google Reviews</h3>
+              <p className="text-muted-foreground">
+                Trusted by local clients in Carol Stream
+              </p>
+            </div>
+            <FeaturedReviews />
+          </div>
           <div className="mt-6 flex justify-center">
             <GoogleReviewsBadge />
           </div>

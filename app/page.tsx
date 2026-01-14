@@ -1,6 +1,5 @@
 import { SectionHeader } from "@/components/SectionHeader";
 import { ServiceCard } from "@/components/ServiceCard";
-import { TestimonialCard } from "@/components/TestimonialCard";
 import { BookNowButton } from "@/components/BookNowButton";
 import { LeadForm } from "@/components/LeadForm";
 import { ResultsGallery } from "@/components/ResultsGallery";
@@ -8,9 +7,12 @@ import { TrainerPhoto } from "@/components/TrainerPhoto";
 import { TrustBar } from "@/components/TrustBar";
 import { TestimonialCarousel } from "@/components/TestimonialCarousel";
 import { GoogleReviewsBadge } from "@/components/GoogleReviewsBadge";
-import { SERVICES, DEFAULT_CITY } from "@/lib/constants";
+import { FeaturedReviews } from "@/components/FeaturedReviews";
+import { SERVICES, DEFAULT_CITY, SITE_NAME, ADDRESS } from "@/lib/constants";
 import { generateLocalBusinessSchema } from "@/lib/schema";
 import { facebookReviews } from "@/lib/facebook-reviews";
+import { featuredReviews } from "@/lib/featuredReviews";
+import { env } from "@/lib/env";
 import {
   Dumbbell,
   Users,
@@ -32,29 +34,6 @@ const serviceIcons = {
   "online-training": Monitor,
 };
 
-const testimonials = [
-  {
-    name: "Sarah Johnson",
-    role: "Lost 30 lbs",
-    content:
-      "222 Fit transformed my life. The personal training sessions are intense but so rewarding. I've never felt stronger!",
-    rating: 5,
-  },
-  {
-    name: "Mike Chen",
-    role: "Marathon Runner",
-    content:
-      "The group training classes keep me motivated. The trainers are knowledgeable and push you to be your best.",
-    rating: 5,
-  },
-  {
-    name: "Emily Rodriguez",
-    role: "Pilates Enthusiast",
-    content:
-      "Mat Pilates at 222 Fit has improved my flexibility and core strength dramatically. Highly recommend!",
-    rating: 5,
-  },
-];
 
 const howItWorks = [
   {
@@ -84,6 +63,37 @@ export const metadata: Metadata = {
 
 export default function HomePage() {
   const localBusinessSchema = generateLocalBusinessSchema();
+  const featuredReviewSchema =
+    featuredReviews.length > 0
+      ? {
+          "@context": "https://schema.org",
+          "@type": "LocalBusiness",
+          name: SITE_NAME,
+          url: env.NEXT_PUBLIC_SITE_URL,
+          address: {
+            "@type": "PostalAddress",
+            streetAddress: ADDRESS.street,
+            addressLocality: ADDRESS.city,
+            addressRegion: ADDRESS.state,
+            postalCode: ADDRESS.zip,
+            addressCountry: "US",
+          },
+          review: featuredReviews.map((review) => ({
+            "@type": "Review",
+            author: {
+              "@type": "Person",
+              name: review.author,
+            },
+            datePublished: review.date,
+            reviewBody: review.text,
+            reviewRating: {
+              "@type": "Rating",
+              ratingValue: review.rating,
+              bestRating: "5",
+            },
+          })),
+        }
+      : null;
 
   return (
     <>
@@ -91,6 +101,12 @@ export default function HomePage() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(localBusinessSchema) }}
       />
+      {featuredReviewSchema && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(featuredReviewSchema) }}
+        />
+      )}
 
       {/* Hero Section */}
       <section className="relative overflow-hidden bg-gradient-to-br from-primary/5 via-background to-primary/3 py-20 md:py-32">
@@ -288,11 +304,18 @@ export default function HomePage() {
               />
             </div>
           )}
-          {/* Additional Testimonials Grid */}
-          <div className="mt-12 grid gap-6 md:grid-cols-3">
-            {testimonials.map((testimonial, index) => (
-              <TestimonialCard key={index} {...testimonial} />
-            ))}
+          {/* Featured Google Reviews */}
+          <div className="mt-12">
+            <div className="mb-6 text-center">
+              <h3 className="text-2xl font-semibold">Featured Google Reviews</h3>
+              <p className="text-muted-foreground">
+                Real feedback from local clients in Carol Stream
+              </p>
+            </div>
+            <FeaturedReviews />
+            <div className="mt-6 flex justify-center">
+              <GoogleReviewsBadge />
+            </div>
           </div>
           <div className="mt-8 text-center">
             <Link
@@ -301,9 +324,6 @@ export default function HomePage() {
             >
               View all testimonials →
             </Link>
-          </div>
-          <div className="mt-6 flex justify-center">
-            <GoogleReviewsBadge />
           </div>
         </div>
       </section>
