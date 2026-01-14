@@ -1,6 +1,12 @@
 import Link from "next/link";
 import Image from "next/image";
-import { SITE_NAME, DEFAULT_CITY, ADDRESS, BOOKING_MEMBERSHIPS_URL } from "@/lib/constants";
+import {
+  SITE_NAME,
+  DEFAULT_CITY,
+  ADDRESS,
+  BOOKING_MEMBERSHIPS_URL,
+  GOOGLE_REVIEWS_URL,
+} from "@/lib/constants";
 import { Phone, MapPin } from "lucide-react";
 
 export function Footer() {
@@ -19,6 +25,7 @@ export function Footer() {
       { href: "/pricing", label: "Pricing" },
       { href: "/testimonials", label: "Results" },
       { href: "/faq", label: "FAQ" },
+      { href: "/personal-trainer-carol-stream", label: "Personal Trainer Carol Stream" },
     ],
     legal: [
       { href: "/contact", label: "Contact" },
@@ -128,6 +135,17 @@ export function Footer() {
           <p>
             © {currentYear} {SITE_NAME}. All rights reserved.
           </p>
+          <div className="mt-2">
+            <a
+              href={GOOGLE_REVIEWS_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="See all 222 Fit Google reviews"
+              className="text-xs text-muted-foreground hover:text-primary transition-colors"
+            >
+              Google Reviews
+            </a>
+          </div>
         </div>
       </div>
     </footer>

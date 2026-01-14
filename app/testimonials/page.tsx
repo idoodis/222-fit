@@ -1,6 +1,7 @@
 import { SectionHeader } from "@/components/SectionHeader";
 import { TestimonialCarousel } from "@/components/TestimonialCarousel";
 import { ResultsGallery } from "@/components/ResultsGallery";
+import { GoogleReviewsBadge } from "@/components/GoogleReviewsBadge";
 import { DEFAULT_CITY } from "@/lib/constants";
 import { generateMetadata } from "@/lib/seo";
 import { generateBreadcrumbSchema } from "@/lib/schema";
@@ -54,6 +55,9 @@ export default function TestimonialsPage() {
                 autoRotate={true}
                 rotateInterval={5000}
               />
+            </div>
+            <div className="mt-6 flex justify-center">
+              <GoogleReviewsBadge />
             </div>
           </div>
         )}

@@ -10,6 +10,8 @@ export const ADDRESS = {
 };
 
 export const BOOKING_MEMBERSHIPS_URL = "https://www.vagaro.com/222fit/memberships";
+export const GOOGLE_REVIEWS_URL =
+  "https://www.google.com/search?sca_esv=cbcc352c89b9e229&sxsrf=ANbL-n6Zvdkvz3ffL-CGEAYZhq7pMs44DA:1768420080740&si=AL3DRZEsmMGCryMMFSHJ3StBhOdZ2-6yYkXd_doETEE1OR-qOa9yPN29-40MLSV4ieyYqe2IB2dKuAr6OWRMWlxD0DjETPm4jU_rw-3oBkaFRkQgRXsay0pA3yj8wc7ylVpPkBfnrJKF&q=222+FIT+Reviews&sa=X&ved=2ahUKEwiWqueV5ouSAxUs7skDHTJdEkcQ0bkNegQIQhAH&biw=1536&bih=826&dpr=1.25&aic=0";
 
 export const SERVICES = [
   {

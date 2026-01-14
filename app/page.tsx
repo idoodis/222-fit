@@ -7,6 +7,7 @@ import { ResultsGallery } from "@/components/ResultsGallery";
 import { TrainerPhoto } from "@/components/TrainerPhoto";
 import { TrustBar } from "@/components/TrustBar";
 import { TestimonialCarousel } from "@/components/TestimonialCarousel";
+import { GoogleReviewsBadge } from "@/components/GoogleReviewsBadge";
 import { SERVICES, DEFAULT_CITY } from "@/lib/constants";
 import { generateLocalBusinessSchema } from "@/lib/schema";
 import { facebookReviews } from "@/lib/facebook-reviews";
@@ -222,6 +223,14 @@ export default function HomePage() {
             subtitle="Our Services"
             description="Comprehensive fitness solutions tailored to your needs"
           />
+          <div className="mt-6 text-center">
+            <Link
+              href="/personal-trainer-carol-stream"
+              className="inline-flex items-center text-sm font-medium text-primary hover:underline"
+            >
+              Looking for a personal trainer in Carol Stream? Learn more →
+            </Link>
+          </div>
           <div className="mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
             {SERVICES.map((service) => {
               const Icon = serviceIcons[service.slug as keyof typeof serviceIcons];
@@ -292,6 +301,9 @@ export default function HomePage() {
             >
               View all testimonials →
             </Link>
+          </div>
+          <div className="mt-6 flex justify-center">
+            <GoogleReviewsBadge />
           </div>
         </div>
       </section>

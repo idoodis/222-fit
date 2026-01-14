@@ -47,6 +47,16 @@ export default function ServicesPage() {
           description={`Premium fitness training services in ${DEFAULT_CITY}, IL. Whether you're looking for one-on-one personal training, motivating group classes, or flexible online coaching, we have a program designed to help you achieve your goals. Serving Carol Stream, Wheaton, Glen Ellyn, and surrounding areas.`}
         />
 
+        {/* Local SEO Link */}
+        <div className="mt-8 text-center">
+          <Link
+            href="/personal-trainer-carol-stream"
+            className="inline-flex items-center text-sm font-medium text-primary hover:underline"
+          >
+            Personal Trainer in Carol Stream, IL →
+          </Link>
+        </div>
+
         {/* Overview Section */}
         <div className="mt-12 max-w-3xl mx-auto">
           <h2 className="text-2xl font-semibold mb-4">Who Are These Services For?</h2>
