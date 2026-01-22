@@ -261,6 +261,15 @@ export default function HomePage() {
               );
             })}
           </div>
+          <div className="mt-8 flex justify-center">
+            <Link
+              href="/services/group-training#group-class-schedule"
+              className="inline-flex items-center justify-center rounded-md border border-primary/30 bg-transparent px-6 py-3 text-sm font-medium text-primary transition-all hover:bg-primary/10 hover:border-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
+            >
+              View Group Class Schedule
+              <ArrowRight className="ml-2 h-4 w-4" />
+            </Link>
+          </div>
         </div>
       </section>
 
