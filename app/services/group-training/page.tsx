@@ -1,6 +1,6 @@
 import { SectionHeader } from "@/components/SectionHeader";
 import { BookingSection } from "@/components/BookingSection";
-import { ADDRESS, BOOKING_MEMBERSHIPS_URL, DEFAULT_CITY } from "@/lib/constants";
+import { ADDRESS, DEFAULT_CITY } from "@/lib/constants";
 import { FirstClassFreeCta } from "@/components/FirstClassFreeCta";
 import { generateMetadata } from "@/lib/seo";
 import { generateBreadcrumbSchema } from "@/lib/schema";
@@ -212,7 +212,7 @@ export default function GroupTrainingPage() {
       },
     },
   ];
-  const firstClassFreeUrl = `${BOOKING_MEMBERSHIPS_URL}?source=first_class_free`;
+  const firstClassFreeUrl = "/group-training-free-class";
 
   return (
     <>

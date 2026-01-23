@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { usePathname } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
 import { BookNowButton } from "@/components/BookNowButton";
@@ -10,6 +11,11 @@ import { SITE_NAME } from "@/lib/constants";
 
 export function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
+  const pathname = usePathname();
+
+  if (pathname === "/group-training-free-class") {
+    return null;
+  }
 
   const navLinks = [
     { href: "/", label: "Home" },

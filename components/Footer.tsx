@@ -1,16 +1,23 @@
+"use client";
+
 import Link from "next/link";
 import Image from "next/image";
 import {
   SITE_NAME,
   DEFAULT_CITY,
   ADDRESS,
-  BOOKING_MEMBERSHIPS_URL,
   GOOGLE_REVIEWS_URL,
 } from "@/lib/constants";
 import { Phone, MapPin } from "lucide-react";
+import { usePathname } from "next/navigation";
 
 export function Footer() {
   const currentYear = new Date().getFullYear();
+  const pathname = usePathname();
+
+  if (pathname === "/group-training-free-class") {
+    return null;
+  }
 
   const footerLinks = {
     services: [

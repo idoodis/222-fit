@@ -1,32 +1,12 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
-
-declare global {
-  interface Window {
-    gtag?: (...args: unknown[]) => void;
-  }
-}
 
 interface FirstClassFreeCtaProps {
   href: string;
 }
 
 export function FirstClassFreeCta({ href }: FirstClassFreeCtaProps) {
-  const pathname = usePathname();
-
-  const handleClick = () => {
-    if (typeof window === "undefined" || typeof window.gtag !== "function") {
-      return;
-    }
-
-    window.gtag("event", "first_class_free_click", {
-      page_path: pathname || window.location.pathname,
-      source: "group_schedule",
-    });
-  };
-
   return (
     <div className="rounded-xl border border-primary/20 bg-background/60 p-6 text-center shadow-lg md:p-8">
       <p className="text-sm font-semibold uppercase tracking-[0.2em] text-primary/80">
@@ -47,12 +27,9 @@ export function FirstClassFreeCta({ href }: FirstClassFreeCtaProps) {
       <div className="mt-6 flex flex-col items-center gap-2">
         <Link
           href={href}
-          target="_blank"
-          rel="noopener noreferrer"
-          onClick={handleClick}
           className="inline-flex items-center justify-center rounded-md bg-primary px-8 py-3 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
         >
-          Claim Your Free First Class
+          Complimentary First Group Class
         </Link>
         <p className="text-xs text-muted-foreground">Limited to new clients only</p>
       </div>
