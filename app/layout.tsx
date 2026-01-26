@@ -5,7 +5,7 @@ import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { generateMetadata as genMeta } from "@/lib/seo";
 import Script from "next/script";
-import { env } from "@/lib/env";
+import { Analytics } from "@/components/Analytics";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -30,7 +30,7 @@ export default function RootLayout({
   // fontClasses is computed from static font variables (computed at build time)
   // No dynamic values (Date.now(), Math.random(), window-dependent logic, etc.)
   const fontClasses = `${inter.variable} ${poppins.variable}`;
-  const gaId = env.NEXT_PUBLIC_GA_MEASUREMENT_ID;
+  const gaId = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID;
 
   return (
     // Suppress hydration warning for browser extension-injected attributes (e.g., --vsc-domain)
@@ -47,9 +47,10 @@ export default function RootLayout({
                 window.dataLayer = window.dataLayer || [];
                 function gtag(){dataLayer.push(arguments);}
                 gtag('js', new Date());
-                gtag('config', '${gaId}');
+                gtag('config', '${gaId}', { send_page_view: false });
               `}
             </Script>
+            <Analytics measurementId={gaId} />
           </>
         )}
         <Navbar />
