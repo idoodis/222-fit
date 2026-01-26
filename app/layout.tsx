@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Suspense } from "react";
 import { Inter, Poppins } from "next/font/google";
 import "./globals.css";
 import { Navbar } from "@/components/Navbar";
@@ -50,7 +51,9 @@ export default function RootLayout({
                 gtag('config', '${gaId}', { send_page_view: false });
               `}
             </Script>
-            <Analytics measurementId={gaId} />
+            <Suspense fallback={null}>
+              <Analytics measurementId={gaId} />
+            </Suspense>
           </>
         )}
         <Navbar />
