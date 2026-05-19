@@ -8,6 +8,7 @@ import { TrustBar } from "@/components/TrustBar";
 import { TestimonialCarousel } from "@/components/TestimonialCarousel";
 import { GoogleReviewsBadge } from "@/components/GoogleReviewsBadge";
 import { FeaturedReviews } from "@/components/FeaturedReviews";
+import { ScheduleWidget } from "@/components/ScheduleWidget";
 import { SERVICES, DEFAULT_CITY, SITE_NAME, ADDRESS } from "@/lib/constants";
 import { generateLocalBusinessSchema } from "@/lib/schema";
 import { facebookReviews } from "@/lib/facebook-reviews";
@@ -291,6 +292,32 @@ export default function HomePage() {
                 <p className="text-muted-foreground">{item.description}</p>
               </div>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Class Schedule */}
+      <section className="relative overflow-hidden bg-gradient-to-b from-secondary via-background to-background py-16 md:py-24">
+        <div className="container mx-auto px-4">
+          <SectionHeader
+            title="Find a Class & Book Online"
+            subtitle="Class Schedule"
+            description="Browse the live class schedule and reserve your spot in seconds. Updated in real time."
+          />
+          <div className="mx-auto mt-12 max-w-5xl">
+            <div className="rounded-2xl border border-primary/10 bg-card p-3 shadow-md sm:p-5 md:p-6">
+              <ScheduleWidget />
+            </div>
+            <p className="mt-6 text-center text-sm text-muted-foreground">
+              Don&apos;t see what you&apos;re looking for?{" "}
+              <Link
+                href="/contact"
+                className="font-medium text-primary hover:underline"
+              >
+                Reach out and we&apos;ll help you find the right fit
+                <ArrowRight className="ml-1 inline h-3 w-3" />
+              </Link>
+            </p>
           </div>
         </div>
       </section>
