@@ -8,7 +8,7 @@
  * Quick reference
  * ---------------
  * - Turn the whole feature off:           enabled: false
- * - Show the price / sessions in popup:   offerDetails.verified: true
+ * - Hide the "3 Sessions for $22" block: offerDetails.verified: false
  * - Countdown to a real end date:         countdown: { mode: "fixed", endsAt: "2026-12-31T23:59:59-06:00", onExpire: "hide-offer" }
  * - Per-visitor window (only if honored): countdown: { mode: "visitor", durationHours: 48, enforcedByBusiness: true, onExpire: "hide-offer" }
  * - No countdown (default):               countdown: { mode: "off" }
@@ -77,16 +77,19 @@ export const INTRO_OFFER_CONFIG = {
   },
 
   /**
-   * Offer specifics shown inside the popup. They are ONLY displayed when
-   * `verified` is true — confirm they match the live Mindbody pricing option
-   * before switching it on, and update them whenever the offer changes.
+   * The offer itself, shown as the centerpiece of the popup ("3 Sessions for
+   * $22"). Only displayed when `verified` is true. Keep it in sync with the
+   * Mindbody pricing option whenever the offer changes.
    *
-   * Pre-filled from the Mindbody checkout page as seen on 2026-11-19.
+   * Confirmed by 222 FIT on 2026-11-19. `term` matches the Mindbody checkout
+   * ("Expires 12 days after purchase"); set it to "" to hide that line.
    */
   offerDetails: {
-    verified: false,
-    price: "$22",
-    summary: "3 sessions · use within 12 days of purchase",
+    verified: true,
+    sessions: 3,
+    price: 22,
+    currency: "$",
+    term: "Use within 12 days of purchase",
   },
 
   /**

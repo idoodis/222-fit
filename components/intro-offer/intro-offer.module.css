@@ -280,20 +280,165 @@
   color: var(--gold-light);
 }
 
-.details {
+/* --- Offer: "3 Sessions for $22" — the visual centerpiece -------------- */
+
+.offerCard {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  margin-top: 1.25rem;
+  padding: 0.85rem 1rem 0.8rem;
+  border-radius: 1.25rem;
+  border: 1px solid rgb(231 215 168 / 0.4);
+  background:
+    radial-gradient(90% 130% at 50% 0%, rgb(184 163 106 / 0.3), transparent 70%),
+    linear-gradient(180deg, rgb(184 163 106 / 0.1), rgb(11 11 11 / 0.55));
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 0.08),
+    0 0 0 4px rgb(184 163 106 / 0.05),
+    0 18px 50px -20px rgb(184 163 106 / 0.55);
+}
+
+@media (min-width: 640px) {
+  .offerCard {
+    margin-top: 1.5rem;
+    padding: 1rem 1.25rem 0.95rem;
+  }
+}
+
+.offerSheen {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(
+    105deg,
+    transparent 35%,
+    rgb(255 244 214 / 0.14) 50%,
+    transparent 65%
+  );
+  transform: translateX(-120%);
+  animation: sheen 6s ease-in-out 0.9s infinite;
+}
+
+.offerEyebrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  font-family: var(--font-poppins), sans-serif;
+  font-size: 0.62rem;
+  font-weight: 600;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: rgb(231 215 168 / 0.9);
+}
+
+.offerEyebrow::before,
+.offerEyebrow::after {
+  content: "";
+  width: 1.75rem;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgb(184 163 106 / 0.7));
+}
+
+.offerEyebrow::after {
+  transform: scaleX(-1);
+}
+
+.offerRow {
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 0.9rem;
-  margin-top: 1.25rem;
+  margin-top: 0.35rem;
 }
 
-.detailsPrice {
+@media (min-width: 640px) {
+  .offerRow {
+    gap: 1.25rem;
+  }
+}
+
+.offerFigure {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.offerNumber {
   font-family: var(--font-poppins), sans-serif;
-  font-size: 2.25rem;
+  font-size: 3.4rem;
   font-weight: 800;
   line-height: 1;
+  letter-spacing: -0.03em;
   color: var(--color-brand-off-white, #f5f5f5);
+  font-variant-numeric: lining-nums;
+}
+
+@media (min-width: 640px) {
+  .offerNumber {
+    font-size: 4.4rem;
+  }
+}
+
+.offerPrice {
+  background: linear-gradient(
+    100deg,
+    var(--gold) 0%,
+    var(--gold-light) 35%,
+    #fff3d0 50%,
+    var(--gold-light) 65%,
+    var(--gold) 100%
+  );
+  background-size: 220% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  filter: drop-shadow(0 0 16px rgb(184 163 106 / 0.45));
+  animation:
+    shimmer-text 6s ease-in-out infinite,
+    price-glow 3.2s ease-in-out infinite;
+}
+
+.offerCurrency {
+  display: inline-block;
+  margin-right: 0.04em;
+  font-size: 0.5em;
+  vertical-align: top;
+  transform: translateY(0.18em);
+}
+
+.offerCaption {
+  margin-top: 0.35rem;
+  font-size: 0.62rem;
+  font-weight: 600;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--color-brand-warm-gray, #9ca3af);
+}
+
+.offerFor {
+  align-self: center;
+  margin-bottom: 1.1rem;
+  font-family: var(--font-poppins), sans-serif;
+  font-size: 1rem;
+  font-style: italic;
+  font-weight: 500;
+  color: rgb(231 215 168 / 0.75);
+}
+
+@media (min-width: 640px) {
+  .offerFor {
+    font-size: 1.15rem;
+  }
+}
+
+.offerTerm {
+  margin-top: 0.6rem;
+  padding-top: 0.55rem;
+  border-top: 1px solid rgb(255 255 255 / 0.06);
+  font-size: 0.72rem;
+  color: var(--color-brand-warm-gray, #9ca3af);
 }
 
 .ended {
@@ -657,6 +802,62 @@
   background: rgb(255 255 255 / 0.08);
 }
 
+/* --- Short screens (e.g. iPhone SE, small laptops): keep the CTA above the fold */
+
+@media (max-height: 740px) {
+  .content.content {
+    padding-top: 1.75rem;
+  }
+
+  .headline.headline {
+    margin-top: 0.85rem;
+    font-size: 1.5rem;
+  }
+
+  .subhead.subhead {
+    margin-top: 0.6rem;
+    font-size: 0.85rem;
+    line-height: 1.45;
+  }
+
+  .offerCard {
+    margin-top: 0.85rem;
+    padding: 0.6rem 1rem 0.6rem;
+  }
+
+  .offerNumber {
+    font-size: 2.9rem;
+  }
+
+  .offerTerm {
+    margin-top: 0.4rem;
+    padding-top: 0.4rem;
+  }
+
+  .eligibility {
+    margin-top: 0.85rem;
+    padding: 0.65rem 0.9rem;
+  }
+
+  .eligibilityIcon {
+    width: 2.1rem;
+    height: 2.1rem;
+  }
+
+  .countdownRow {
+    margin-top: 0.5rem;
+  }
+
+  .cta {
+    margin-top: 1.1rem;
+    min-height: 3.3rem;
+  }
+
+  .trust {
+    display: none;
+  }
+}
+
 /* --- Keyframes ---------------------------------------------------------------- */
 
 @keyframes backdrop-in {
@@ -755,6 +956,16 @@
   }
 }
 
+@keyframes price-glow {
+  0%,
+  100% {
+    filter: drop-shadow(0 0 12px rgb(184 163 106 / 0.35));
+  }
+  50% {
+    filter: drop-shadow(0 0 22px rgb(184 163 106 / 0.7));
+  }
+}
+
 @keyframes blink {
   0%,
   100% {
@@ -796,6 +1007,8 @@
   }
 
   .borderGlow,
+  .offerSheen,
+  .offerPrice,
   .aura::before,
   .aura::after,
   .goldText,

@@ -128,6 +128,7 @@ export default function IntroOfferDialog({
   const timerActive =
     countdown.deadline !== null && !expired && countdown.mode !== "off";
   const offerEnded = expired && countdown.onExpire === "hide-offer";
+  const showOffer = offerDetails.verified && !offerEnded;
   const timerLabel =
     countdown.mode === "visitor"
       ? "Your intro offer window closes in"
@@ -176,7 +177,7 @@ export default function IntroOfferDialog({
               <X className="h-5 w-5" aria-hidden="true" />
             </button>
 
-            <div className="relative px-6 pb-[max(1.5rem,env(safe-area-inset-bottom))] pt-9 text-center sm:px-10 sm:pb-8 sm:pt-11">
+            <div className={`${styles.content} relative px-6 pb-[max(1.5rem,env(safe-area-inset-bottom))] pt-9 text-center sm:px-10 sm:pb-8 sm:pt-11`}>
               <div {...reveal(0)}>
                 <span className={styles.badge}>
                   <Sparkles className="h-3.5 w-3.5" aria-hidden="true" />
@@ -187,7 +188,7 @@ export default function IntroOfferDialog({
               <h2
                 id={titleId}
                 {...reveal(1)}
-                className={`${styles.reveal} mt-5 text-[1.75rem] font-extrabold leading-[1.1] tracking-tight text-brand-off-white sm:text-[2.35rem]`}
+                className={`${styles.reveal} ${styles.headline} mt-5 text-[1.75rem] font-extrabold leading-[1.1] tracking-tight text-brand-off-white sm:text-[2.35rem]`}
               >
                 <span className="block">{copy.headlineLead}</span>
                 <span className={`${styles.goldText} block`}>
@@ -195,15 +196,50 @@ export default function IntroOfferDialog({
                 </span>
               </h2>
 
+              {showOffer && (
+                <div {...reveal(2)}>
+                  <div className={styles.offerCard}>
+                    <span className={styles.offerSheen} aria-hidden="true" />
+                    <p className={styles.offerEyebrow}>Intro Offer</p>
+                    <p className="sr-only">
+                      {offerDetails.sessions} sessions for{" "}
+                      {offerDetails.currency}
+                      {offerDetails.price}
+                    </p>
+                    <div className={styles.offerRow} aria-hidden="true">
+                      <div className={styles.offerFigure}>
+                        <span className={styles.offerNumber}>
+                          {offerDetails.sessions}
+                        </span>
+                        <span className={styles.offerCaption}>Sessions</span>
+                      </div>
+                      <span className={styles.offerFor}>for</span>
+                      <div className={styles.offerFigure}>
+                        <span className={`${styles.offerNumber} ${styles.offerPrice}`}>
+                          <span className={styles.offerCurrency}>
+                            {offerDetails.currency}
+                          </span>
+                          {offerDetails.price}
+                        </span>
+                        <span className={styles.offerCaption}>Total</span>
+                      </div>
+                    </div>
+                    {offerDetails.term && (
+                      <p className={styles.offerTerm}>{offerDetails.term}</p>
+                    )}
+                  </div>
+                </div>
+              )}
+
               <p
                 id={descId}
-                {...reveal(2)}
-                className={`${styles.reveal} mx-auto mt-4 max-w-sm text-[0.95rem] leading-relaxed text-brand-warm-gray sm:text-base`}
+                {...reveal(3)}
+                className={`${styles.reveal} ${styles.subhead} mx-auto mt-4 max-w-sm text-[0.95rem] leading-relaxed text-brand-warm-gray sm:text-base`}
               >
                 {copy.subheadline}
               </p>
 
-              <div {...reveal(3)}>
+              <div {...reveal(4)}>
                 <div className={styles.eligibility}>
                   <span className={styles.eligibilityIcon} aria-hidden="true">
                     <BadgeCheck className="h-5 w-5" />
@@ -218,25 +254,12 @@ export default function IntroOfferDialog({
               </div>
 
               {timerActive && countdown.deadline !== null && (
-                <div {...reveal(4)}>
+                <div {...reveal(5)}>
                   <Countdown
                     deadline={countdown.deadline}
                     label={timerLabel}
                     className="mt-6"
                   />
-                </div>
-              )}
-
-              {offerDetails.verified && !offerEnded && (
-                <div {...reveal(5)}>
-                  <div className={styles.details}>
-                    <span className={styles.detailsPrice}>
-                      {offerDetails.price}
-                    </span>
-                    <span className="text-left text-sm leading-snug text-brand-off-white/85">
-                      {offerDetails.summary}
-                    </span>
-                  </div>
                 </div>
               )}
 
