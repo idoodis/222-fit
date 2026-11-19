@@ -1,9 +1,12 @@
 import { SectionHeader } from "@/components/SectionHeader";
-import { BookNowButton } from "@/components/BookNowButton";
-import { DEFAULT_CITY } from "@/lib/constants";
+import { PricingCard } from "@/components/pricing/PricingCard";
+import { EveryClassCallout } from "@/components/pricing/EveryClassCallout";
+import { Reveal } from "@/components/pricing/Reveal";
+import styles from "@/components/pricing/pricing.module.css";
+import { PRICING_PACKAGES } from "@/lib/pricing";
 import { generateMetadata } from "@/lib/seo";
 import { generateBreadcrumbSchema } from "@/lib/schema";
-import { CheckCircle, Crown } from "lucide-react";
+import { Lock } from "lucide-react";
 import Link from "next/link";
 
 export const metadata = generateMetadata({
@@ -11,69 +14,6 @@ export const metadata = generateMetadata({
   description: `Affordable fitness training packages in Carol Stream, IL. Flexible pricing options for personal training, group classes, mat Pilates, boxing lessons, and online coaching. Serving Carol Stream, Wheaton, Glen Ellyn, and surrounding areas.`,
   path: "/pricing",
 });
-
-const packages = [
-  {
-    name: "Standard Pack",
-    price: "$100",
-    period: "per month",
-    description: "Perfect for getting started",
-    features: [
-      "1 class / week",
-      "($25/class)",
-      "1 month rollover",
-    ],
-  },
-  {
-    name: "Premium Pack",
-    price: "$160",
-    period: "per month",
-    description: "Great value for regular training",
-    features: [
-      "2 classes / week",
-      "($20/class)",
-      "1 month rollover",
-    ],
-    popular: true,
-  },
-  {
-    name: "Elite Pack",
-    price: "$200",
-    period: "per month",
-    description: "Maximum training frequency",
-    features: [
-      "3 classes / week",
-      "($16.50/class)",
-      "10% off products",
-      "1 month rollover",
-    ],
-  },
-  {
-    name: "Ultimate Pack",
-    price: "$380",
-    period: "per month",
-    description: "Complete fitness solution",
-    features: [
-      "1 Personal Training session per week",
-      "2 classes / week",
-      "Access to personal training app experience",
-      "10% off products",
-      "1 month rollover",
-    ],
-    premium: true,
-  },
-  {
-    name: "Drop In",
-    price: "$30",
-    period: "per class",
-    description: "Try a class without commitment",
-    features: [
-      "Single class access",
-      "No commitment required",
-      "Perfect for trying us out",
-    ],
-  },
-];
 
 export default function PricingPage() {
   const breadcrumbSchema = generateBreadcrumbSchema([
@@ -94,84 +34,46 @@ export default function PricingPage() {
           description="Elevate your fitness journey with a variety of group training classes that will leave you feeling inspired and motivated to transform your body and mind."
         />
 
-        <div className="mt-12 grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-          {packages.map((pkg) => (
-            <div
-              key={pkg.name}
-              className={`relative rounded-lg border bg-card p-8 ${
-                pkg.popular
-                  ? "border-primary shadow-lg ring-2 ring-primary"
-                  : pkg.premium
-                  ? "border-primary shadow-lg ring-2 ring-primary"
-                  : ""
-              }`}
-            >
-              {pkg.popular && (
-                <div className="absolute -top-4 left-1/2 -translate-x-1/2">
-                  <span className="rounded-full bg-primary px-4 py-1 text-sm font-semibold text-primary-foreground">
-                    Most Popular
-                  </span>
-                </div>
-              )}
-              {pkg.premium && (
-                <div className="absolute -top-4 left-1/2 -translate-x-1/2">
-                  <span className="flex items-center gap-1 rounded-full bg-primary px-4 py-1 text-sm font-semibold text-primary-foreground">
-                    <Crown className="h-4 w-4" />
-                    Premium
-                  </span>
-                </div>
-              )}
-              <div className="text-center">
-                <h3 className="text-2xl font-bold">{pkg.name}</h3>
-                <p className="mt-2 text-sm text-muted-foreground">
-                  {pkg.description}
-                </p>
-                <div className="mt-4">
-                  <span className="text-4xl font-bold">{pkg.price}</span>
-                  <span className="text-muted-foreground"> {pkg.period}</span>
-                </div>
+        <div
+          className={`${styles.grid} mx-auto mt-14 grid max-w-7xl gap-x-6 gap-y-10 md:grid-cols-2 xl:grid-cols-4 xl:gap-5`}
+        >
+          {PRICING_PACKAGES.map((pkg, i) => (
+            <Reveal key={pkg.id} delay={i * 80} className="h-full">
+              <div
+                className={styles.enter}
+                style={{ "--enter-delay": `${i * 90}ms` } as React.CSSProperties}
+              >
+                <PricingCard pkg={pkg} />
               </div>
-              <ul className="mt-8 space-y-4">
-                {pkg.features.map((feature, index) => (
-                  <li key={index} className="flex items-start gap-3">
-                    <CheckCircle className="mt-0.5 h-5 w-5 flex-shrink-0 text-primary" />
-                    <span className="text-sm text-muted-foreground">
-                      {feature}
-                    </span>
-                  </li>
-                ))}
-              </ul>
-              <div className="mt-8 space-y-3">
-                <Link
-                  href="/start"
-                  className="w-full inline-flex items-center justify-center rounded-md bg-primary px-6 py-3 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
-                >
-                  Get Started
-                </Link>
-                <p className="text-center">
-                  <a
-                    href="https://www.vagaro.com/222fit/memberships"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-xs text-muted-foreground hover:text-primary transition-colors"
-                  >
-                    Prefer to book immediately? Book on Vagaro →
-                  </a>
-                </p>
-              </div>
-            </div>
+            </Reveal>
           ))}
+        </div>
+
+        <p className="mt-8 text-center text-sm text-muted-foreground">
+          <Lock
+            className="mr-1.5 inline h-4 w-4 -translate-y-px align-middle text-primary"
+            aria-hidden="true"
+          />
+          Purchases are completed securely on Mindbody.
+        </p>
+
+        <div className="mx-auto max-w-7xl">
+          <EveryClassCallout />
         </div>
 
         <div className="mt-12 text-center">
           <p className="text-muted-foreground">
-            All packages can be customized. Contact us for individual session
-            pricing or custom packages.
+            All packages can be customized.{" "}
+            <Link
+              href="/contact"
+              className="font-medium text-primary underline-offset-4 hover:underline"
+            >
+              Contact us
+            </Link>{" "}
+            for individual session pricing or custom packages.
           </p>
         </div>
       </div>
     </>
   );
 }
-
-
