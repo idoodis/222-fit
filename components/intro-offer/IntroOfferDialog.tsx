@@ -202,16 +202,18 @@ export default function IntroOfferDialog({
                     <span className={styles.offerSheen} aria-hidden="true" />
                     <p className={styles.offerEyebrow}>Intro Offer</p>
                     <p className="sr-only">
-                      {offerDetails.sessions} sessions for{" "}
+                      {offerDetails.quantity} {offerDetails.unit.toLowerCase()} for{" "}
                       {offerDetails.currency}
                       {offerDetails.price}
                     </p>
                     <div className={styles.offerRow} aria-hidden="true">
                       <div className={styles.offerFigure}>
                         <span className={styles.offerNumber}>
-                          {offerDetails.sessions}
+                          {offerDetails.quantity}
                         </span>
-                        <span className={styles.offerCaption}>Sessions</span>
+                        <span className={styles.offerCaption}>
+                          {offerDetails.unit}
+                        </span>
                       </div>
                       <span className={styles.offerFor}>for</span>
                       <div className={styles.offerFigure}>
