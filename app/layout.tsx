@@ -7,6 +7,7 @@ import { Footer } from "@/components/Footer";
 import { generateMetadata as genMeta } from "@/lib/seo";
 import Script from "next/script";
 import { Analytics } from "@/components/Analytics";
+import { IntroOffer } from "@/components/intro-offer/IntroOffer";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -59,6 +60,7 @@ export default function RootLayout({
         <Navbar />
         <main className="flex-1">{children}</main>
         <Footer />
+        <IntroOffer />
       </body>
     </html>
   );
